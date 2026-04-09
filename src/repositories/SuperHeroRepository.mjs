@@ -15,7 +15,9 @@ class SuperHeroRepository extends IRepository {
     async obtenerMayoresDe30() {
         return await SuperHero.find({ edad: { $gt: 30 } });
     }
-    //
+
+    // Implementación de los nuevos métodos
+
     async crear(datos) {
         const nuevoSuperHeroe = new SuperHero(datos);
         return await nuevoSuperHeroe.save();
