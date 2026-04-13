@@ -1,6 +1,7 @@
 import {
   obtenerSuperheroePorId, obtenerTodosLosSuperheroes,
-  buscarSuperheroesPorAtributo, obtenerSuperheroesMayoresDe30
+  buscarSuperheroesPorAtributo, obtenerSuperheroesMayoresDe30,
+  crearSuperheroe, actualizarSuperheroe, eliminarSuperheroePorId, eliminarSuperheroePorNombre
 }
   from '../services/superheroesService.mjs';
 import { renderizarSuperheroe, renderizarListaSuperheroes }
@@ -77,8 +78,8 @@ export async function obtenerSuperheroesMayoresDe30Controller(req, res) {
 export async function crearSuperheroeController(req, res) {
   try {
     const nuevoSuperheroe = req.body;
-    // Aquí iría la lógica para guardar el nuevo superhéroe en la base de datos
-    res.status(201).json({ message: 'Crear un nuevo superhéroe', data: nuevoSuperheroe });
+    const superheroeCreado = await crearSuperheroe(nuevoSuperheroe);
+    res.status(201).json({ message: 'Superhéroe creado exitosamente', data: superheroeCreado });
   } catch (error) {
     res.status(500).send({
       mensaje: 'Error al crear el superhéroe',
@@ -91,8 +92,8 @@ export async function actualizarSuperheroeController(req, res) {
   try {
     const { id } = req.params;
     const datosActualizados = req.body;
-    // Aquí iría la lógica para actualizar el superhéroe en la base de datos
-    res.send(`Superhéroe con ID ${id} actualizado con los datos: ${JSON.stringify(datosActualizados)}`);
+    const superheroeActualizado = await actualizarSuperheroe(id, datosActualizados);
+    res.status(200).json({ message: 'Superhéroe actualizado exitosamente', data: superheroeActualizado });
   } catch (error) {
     res.status(500).send({
       mensaje: 'Error al actualizar el superhéroe',
@@ -104,8 +105,8 @@ export async function actualizarSuperheroeController(req, res) {
 export async function eliminarSuperheroePorIdController(req, res) {
   try {
     const { id } = req.params;
-    // Aquí iría la lógica para eliminar el superhéroe de la base de datos
-    res.json({ message: `Superhéroe de ID ${id} eliminado` });
+    const superheroeEliminado = await eliminarSuperheroePorId(id);
+    res.status(200).json({ message: `Superhéroe de ID ${id} eliminado`, data: superheroeEliminado });
   } catch (error) {
     res.status(500).send({
       mensaje: 'Error al eliminar el superhéroe',
@@ -117,8 +118,8 @@ export async function eliminarSuperheroePorIdController(req, res) {
 export async function eliminarSuperheroePorNombreController(req, res) {
   try {
     const { nombre } = req.params;
-    // Aquí iría la lógica para eliminar el superhéroe de la base de datos
-    res.json({ message: `Superhéroe de nombre ${nombre} eliminado` });
+    const superheroeEliminado = await eliminarSuperheroePorNombre(nombre);
+    res.status(200).json({ message: `Superhéroe de nombre ${nombre} eliminado`, data: superheroeEliminado });
   } catch (error) {
     res.status(500).send({
       mensaje: 'Error al eliminar el superhéroe',

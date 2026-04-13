@@ -3,7 +3,11 @@ import {
     obtenerSuperheroePorIdController,
     obtenerTodosLosSuperheroesController,
     buscarSuperheroesPorAtributoController,
-    obtenerSuperheroesMayoresDe30Controller
+    obtenerSuperheroesMayoresDe30Controller,
+    crearSuperheroeController,
+    actualizarSuperheroeController,
+    eliminarSuperheroePorIdController,
+    eliminarSuperheroePorNombreController
 } from '../controllers/superheroesController.mjs';
 
 const router = express.Router();
@@ -15,27 +19,12 @@ router.get('/heroes/:id', obtenerSuperheroePorIdController);
 
 //Rutas Nuevas
 
-router.post('/heroes', (req, res) => {
-    heroenuevo = req.body;
-    res.send(`Superhéroe creado con los datos: ${JSON.stringify(heroenuevo)}`);
-});
+router.post('/heroes', crearSuperheroeController);
 
-router.put('/heroes/actualizar/:id', (req, res) => {
-    const { id } = req.params;
-    const datosActualizados = req.body;
-    res.send(`Superhéroe con ID ${id} actualizado con los datos: ${JSON.stringify(datosActualizados)}`);
-});
+router.put('/heroes/:id', actualizarSuperheroeController);
 
-router.delete('/heroes/eliminar/:id', (req, res) => {
-    const { id } = req.params;
-    const datosHeroe = { id };
-    res.json({ message: `Superhéroe de ID ${id} con los datos: ${JSON.stringify(datosHeroe)} eliminado` });
-});
+router.delete('/heroes/:id', eliminarSuperheroePorIdController);
 
-router.delete('/heroes/eliminar/:nombre', (req, res) => {
-    const { nombre } = req.params;
-    const datosHeroe = { nombre };
-    res.json({ message: `Superhéroe de nombre ${nombre} con los datos: ${JSON.stringify(datosHeroe)} eliminado` });
-});
+router.delete('/heroes/nombre/:nombre', eliminarSuperheroePorNombreController);
 
 export default router;
